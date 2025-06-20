@@ -35,3 +35,9 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+
+#Models local saving dir
+outputs/
+
+#PoC docs
+WANDS/
