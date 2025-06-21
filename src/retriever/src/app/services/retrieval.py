@@ -35,7 +35,7 @@ class RetrievalService:
     ) -> Union[List[int], Tuple[List[int], None]]:
         lexical_score = lexical_retriever.score(query=query, **scoring_kwargs)
         self.lexical_score = lexical_score
-        dense_score, _ = await dense_retriever.score("armchair", return_unsorted=True)
+        dense_score, _ = await dense_retriever.score(query, return_unsorted=True)
         self.dense_score = dense_score
         return score_mixture(lexical_score, np.array(dense_score), return_score)
 
