@@ -1,0 +1,15 @@
+retrievers:
+  top_n: 50
+  lexical:
+    method: tfidf
+    similarity: cosine
+  dense:
+    model: 'embed-v4.0'
+    max_tokens: 8000
+    output_dim: 1024
+    max_processing_batch: 90
+
+scorer:
+  lexical_score_mixture_alpha: .5
+
+
