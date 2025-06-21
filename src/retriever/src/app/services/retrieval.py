@@ -9,6 +9,11 @@ import os
 import pandas as pd
 from typing import Union, List, Tuple
 import numpy as np
+from ..fallbacks import (
+    async_error_handler_with_fallback,
+    default_fallback_data_docs,
+    default_fallback_data_ids,
+)
 
 config = load_config()
 LEXICAL_METHOD = config["retrievers"]["lexical"]["method"]
@@ -30,6 +35,9 @@ dense_retriever: DenseRetriever = DenseRetriever()
 
 class RetrievalService:
 
+    @async_error_handler_with_fallback(
+        fallback=default_fallback_data_ids, retries=1, delay=0
+    )
     async def retrieve_ids(
         self, query, return_score=False
     ) -> Union[List[int], Tuple[List[int], None]]:
@@ -39,7 +47,10 @@ class RetrievalService:
         self.dense_score = dense_score
         return score_mixture(lexical_score, np.array(dense_score), return_score)
 
-    async def retrieve_docs(self, query):
+    @async_error_handler_with_fallback(
+        fallback=default_fallback_data_docs, retries=1, delay=0
+    )
+    async def retrieve_docs(self, query) -> pd.DataFrame:
         """For this sample code will use the csv as a base, in production this may be a query against the products DB"""
         ids, scores = await self.retrieve_ids(query, return_score=True)
         scores_df = pd.DataFrame({"product_id": ids, "scores": scores})
