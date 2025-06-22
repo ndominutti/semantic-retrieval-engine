@@ -37,7 +37,7 @@ env.bak/
 venv.bak/
 
 #ENV VARS
-.env
+**/.env
 
 #Models local saving dir
 outputs/
