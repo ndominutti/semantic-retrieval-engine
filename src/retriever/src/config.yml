@@ -1,5 +1,5 @@
 retrievers:
-  top_n: 50
+  columns_to_embed: ['product_name', 'product_description']
   lexical:
     method: tfidf
     similarity: cosine
