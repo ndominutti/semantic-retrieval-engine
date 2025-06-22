@@ -1,0 +1,18 @@
+import yaml
+from utils import load_config
+import logging
+from typing import Union, List, Tuple
+
+config = load_config()
+logging.warning(config)
+LEXICAL_ALPHA = config["scorer"]["lexical_score_mixture_alpha"]
+
+
+def score_mixture(
+    lexical_scores, dense_scores, top_n, return_score=False
+) -> Union[List[int], Tuple[List[int], None]]:
+    scores = LEXICAL_ALPHA * lexical_scores + (1 - LEXICAL_ALPHA) * dense_scores
+    top_ids = scores.argsort()[-top_n:][::-1]
+    if return_score:
+        return top_ids.tolist(), scores[top_ids]
+    return top_ids.tolist()
