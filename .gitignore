@@ -36,6 +36,7 @@ ENV/
 env.bak/
 venv.bak/
 
+#ENV VARS
 .env
 
 #Models local saving dir
