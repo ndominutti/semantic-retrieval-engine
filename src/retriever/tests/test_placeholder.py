@@ -2,4 +2,4 @@ import pytest
 
 
 def test_placeholder():
-    assert True
+    pytest.skip("Test not implemented yet")
