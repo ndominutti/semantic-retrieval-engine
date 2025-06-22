@@ -1,10 +1,11 @@
 from pydantic import BaseModel
-from typing import List
+from typing import List, Optional
 import pandas as pd
 
 
 class RetrievalRequest(BaseModel):
     query: str
+    top_n: int
 
 
 class RetrievalIDResponse(BaseModel):
@@ -14,13 +15,13 @@ class RetrievalIDResponse(BaseModel):
 class RetrievalDoc(BaseModel):
     product_id: int
     product_name: str
-    product_class: str
-    category_hierarchy: str
-    product_description: str
-    product_features: str
-    rating_count: float
-    average_rating: float
-    review_count: float
+    product_class: Optional[str]
+    category_hierarchy: Optional[str]
+    product_description: Optional[str]
+    product_features: Optional[str]
+    rating_count: Optional[float]
+    average_rating: Optional[float]
+    review_count: Optional[float]
     score: float
 
 

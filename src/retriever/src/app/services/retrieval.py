@@ -14,6 +14,7 @@ from ..fallbacks import (
     default_fallback_data_docs,
     default_fallback_data_ids,
 )
+from utils import logger
 
 config = load_config()
 LEXICAL_METHOD = config["retrievers"]["lexical"]["method"]
@@ -39,20 +40,20 @@ class RetrievalService:
         fallback=default_fallback_data_ids, retries=3, delay=3
     )
     async def retrieve_ids(
-        self, query, return_score=False
+        self, query, top_n, return_score=False
     ) -> Union[List[int], Tuple[List[int], None]]:
         lexical_score = lexical_retriever.score(query=query, **scoring_kwargs)
-        self.lexical_score = lexical_score
+        logger.debug(lexical_score)
         dense_score, _ = await dense_retriever.score(query, return_unsorted=True)
-        self.dense_score = dense_score
-        return score_mixture(lexical_score, np.array(dense_score), return_score)
+        logger.debug(lexical_score)
+        return score_mixture(lexical_score, np.array(dense_score), top_n, return_score)
 
     @async_error_handler_with_fallback(
         fallback=default_fallback_data_docs, retries=3, delay=3
     )
-    async def retrieve_docs(self, query) -> pd.DataFrame:
+    async def retrieve_docs(self, query, top_n) -> pd.DataFrame:
         """For this sample code will use the csv as a base, in production this may be a query against the products DB"""
-        ids, scores = await self.retrieve_ids(query, return_score=True)
+        ids, scores = await self.retrieve_ids(query, top_n, return_score=True)
         scores_df = pd.DataFrame({"product_id": ids, "scores": scores})
         return DATA.merge(scores_df, how="inner", on="product_id").sort_values(
             by="scores", ascending=False
