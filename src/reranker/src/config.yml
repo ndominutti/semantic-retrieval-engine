@@ -1,0 +1,2 @@
+model: rerank-v3.5
+columns_to_rerank: ['product_name', 'product_description']
