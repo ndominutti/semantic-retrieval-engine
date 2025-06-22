@@ -1,10 +1,11 @@
 import pandas as pd
-from .base_embedder import BaseDenseEmbedder
+from .base_embeder import BaseDenseEmbeder
 from typing import List
 import cohere
 import os
 import asyncio
-from utils import load_config
+from ...utils import load_config, logger
+from exceptions import MissingColumnsError
 
 config = load_config()
 cohere_model = config["retrievers"]["dense"]["model"]
@@ -15,7 +16,7 @@ COHERE_API_KEY = os.getenv("COHERE_API_KEY")
 co = cohere.ClientV2(COHERE_API_KEY)
 
 
-class CohereEmbedder(BaseDenseEmbedder):
+class CohereEmbeder(BaseDenseEmbeder):
 
     def __init__(self, embedding_dim=output_dim):
         self.embedding_dim = embedding_dim
@@ -36,9 +37,10 @@ class CohereEmbedder(BaseDenseEmbedder):
     ) -> List[List[float]]:
         missing = [col for col in cols_to_embed if col not in products_df.columns]
         if missing:
-            raise ValueError(f"Missing columns in DataFrame: {missing}")
+            raise MissingColumnsError(f"Missing columns in DataFrame: {missing}")
         combined_text = (
             products_df[cols_to_embed].fillna("").agg(" ".join, axis=1).tolist()
         )
         response = await self.get_embeddings_async(combined_text)
+        logger.debug(f"Cohere Embedder response: {response}")
         return response.embeddings.float

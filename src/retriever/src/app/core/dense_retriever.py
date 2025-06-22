@@ -1,6 +1,6 @@
 import pandas as pd
 from .base_model import RetrievalBase
-from typing import List, Tuple
+from typing import List, Tuple, Union
 import cohere
 import os
 import asyncio
@@ -35,7 +35,7 @@ class DenseRetriever(RetrievalBase):
         )
 
     async def score(
-        self, query: str, top_n: int = None, return_unsorted=False
+        self, query: str, top_n: Union[int, None] = None, return_unsorted=False
     ) -> Tuple[List[float], List[int]]:
         """Bring scores and idx sorted for ALL the products in the index
 

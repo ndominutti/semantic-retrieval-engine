@@ -6,7 +6,7 @@ import faiss
 import numpy as np
 
 
-class BaseLexicalEmbedder:
+class BaseLexicalEmbeder:
 
     @abstractmethod
     def fit_transform(
@@ -19,7 +19,7 @@ class BaseLexicalEmbedder:
         pass
 
 
-class BaseDenseEmbedder:
+class BaseDenseEmbeder:
 
     def __init__(self, embedding_dim):
         self.embedding_dim = embedding_dim
