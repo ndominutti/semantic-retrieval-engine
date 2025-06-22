@@ -18,6 +18,17 @@ INTERMEDIATE_SAVE_PATH = "dense_embeddings_partial.joblib"
 
 
 async def embedd_products() -> None:
+    """Bulk embed product data using both lexical (TF-IDF) and dense (Cohere) methods,
+    saving intermediate and final artifacts.
+
+    This function performs the following steps:
+    1. Computes and saves lexical embeddings for specified columns using a TF-IDF-based embeder.
+    2. Computes dense embeddings in batches using the Cohere API to respect quota limits, saving intermediate results
+    to disk after each batch.
+    3. Indexes and saves the dense embeddings if all batches complete successfully, and removes the intermediate save
+    file.
+    4. Logs progress and success messages throughout the process.
+    """
     logger.info("Running lexical embedding...")
     lexical_embedder = TDIDFLexicalEmbeder(ARTIFACTS_SAVE_PATH)
     vectors = lexical_embedder.fit_transform(items, COLUMNS_TO_EMBED)

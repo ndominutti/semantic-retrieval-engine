@@ -21,9 +21,15 @@ co = cohere.ClientV2(COHERE_API_KEY)
 class DenseRetriever(RetrievalBase):
 
     def __init__(self):
+        """Initializes the DenseRetriever with the specified similarity method."""
         self.index = faiss_connection.load_index()
 
     async def get_embeddings_async(self, texts: List[str]):
+        """Run async embeddings request.
+
+        Args:
+            texts (List[str]): texts to be embedded
+        """
         return await asyncio.to_thread(
             co.embed,
             texts=texts,
@@ -37,14 +43,19 @@ class DenseRetriever(RetrievalBase):
     async def score(
         self, query: str, top_n: Union[int, None] = None, return_unsorted=False
     ) -> Tuple[List[float], List[int]]:
-        """Bring scores and idx sorted for ALL the products in the index
+        """Computes similarity scores between a query and all products in the index.
 
         Args:
-            query (str): _description_
-            top_n (int): _description_
+            query (str): The input query string to be embedded and compared.
+            top_n (Optional[int], optional): The number of top results to return.
+            If None, returns scores for all products in the index. Defaults to None.
+            return_unsorted (bool, optional): If True, returns scores and indices in their
+            original (unsorted) order. Defaults to False.
 
         Returns:
-            Tuple[List[float], List[int]]:
+            Tuple[List[float], List[int]]: A tuple containing a list of similarity scores and
+            a list of corresponding product indices.
+
         """
         query_embedding = await self.get_embeddings_async([query])
         query_embedding = np.array(query_embedding.embeddings.float_, dtype=np.float32)[
@@ -61,6 +72,20 @@ class DenseRetriever(RetrievalBase):
     def _unsorted_scores(
         self, distances: List[float], idxs: List[int]
     ) -> Tuple[List[float], List[int]]:
+        """Generates a list of dense scores aligned with the full index, filling in zeros
+        for non-selected indices.
+
+        Args:
+            distances (List[float]): A list containing the similarity or distance scores
+            for selected items.
+            idxs (List[int]): A list containing the indices of the selected items in the index.
+
+        Returns:
+            Tuple[List[float], List[int]]:
+                - A list of scores
+                - A list of indices
+
+        """
         dense_scores_unsorted = np.zeros(self.index.ntotal, dtype=np.float32)
         for score, idx in zip(distances[0], idxs[0]):
             dense_scores_unsorted[idx] = score

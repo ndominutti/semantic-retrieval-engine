@@ -4,6 +4,8 @@ from typing import Union, Tuple, List
 
 
 class RetrievalBase(ABC):
+    """Base class for retrievers"""
+
     @abstractmethod
     def score(
         self, query, *args, **kwargs
