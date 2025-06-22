@@ -18,5 +18,5 @@ class CohereReranker:
 
     async def rerank(self, query: str, documents: List[str], top_n: int):
         return await asyncio.to_thread(
-            co.rerank, model=cohere_model, query=query, documents=documents, top_n=2
+            co.rerank, model=cohere_model, query=query, documents=documents, top_n=top_n
         )
