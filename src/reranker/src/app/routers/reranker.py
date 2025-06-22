@@ -28,7 +28,7 @@ async def rerank_docs_ids(
 
 
 @router.post(
-    "/retrieve_get_docs",
+    "/rerank_get_docs",
     response_model=schemas.RerankDocsResponse,
     openapi_extra=rerank_docs_examples,
 )
