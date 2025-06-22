@@ -13,9 +13,9 @@ retrieval_service: RetrievalService = RetrievalService()
     response_model=schemas.RetrievalIDResponse,
     openapi_extra={},
 )
-def retrieve_docs_ids(
+async def retrieve_docs_ids(
     request: schemas.RetrievalRequest,
 ) -> schemas.RetrievalIDResponse:
-    doc_ids = retrieval_service.retrieve_ids(request.query, return_score=False)
+    doc_ids = await retrieval_service.retrieve_ids(request.query, return_score=False)
     response = schemas.RetrievalIDResponse(ids=doc_ids)
     return response

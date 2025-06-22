@@ -1,6 +1,6 @@
 import functools
 import asyncio
-import logging
+from loguru import logger
 from typing import List
 import pandas as pd
 

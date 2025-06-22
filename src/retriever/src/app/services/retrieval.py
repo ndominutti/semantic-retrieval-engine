@@ -36,7 +36,7 @@ dense_retriever: DenseRetriever = DenseRetriever()
 class RetrievalService:
 
     @async_error_handler_with_fallback(
-        fallback=default_fallback_data_ids, retries=1, delay=0
+        fallback=default_fallback_data_ids, retries=3, delay=3
     )
     async def retrieve_ids(
         self, query, return_score=False
@@ -48,7 +48,7 @@ class RetrievalService:
         return score_mixture(lexical_score, np.array(dense_score), return_score)
 
     @async_error_handler_with_fallback(
-        fallback=default_fallback_data_docs, retries=1, delay=0
+        fallback=default_fallback_data_docs, retries=3, delay=3
     )
     async def retrieve_docs(self, query) -> pd.DataFrame:
         """For this sample code will use the csv as a base, in production this may be a query against the products DB"""
