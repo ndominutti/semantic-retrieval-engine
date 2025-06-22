@@ -9,3 +9,14 @@ services:
       - ./src/retriever/.env
     ports:
       - "8000:8000"
+  
+  rerank-system:
+    build:
+      context: ./src/reranker
+      args:
+        APP_PORT: 8080
+    container_name: rerank-system-backend
+    env_file:
+      - ./src/reranker/.env
+    ports:
+      - "8080:8080"
