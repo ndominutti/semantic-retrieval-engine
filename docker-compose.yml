@@ -1,14 +1,14 @@
 services:
-#   retrieval-system:
-#     build:
-#       context: ./src/retriever
-#       args:
-#         APP_PORT: 8000
-#     container_name: retrieval-system-backend
-#     env_file:
-#       - ./src/retriever/.env
-#     ports:
-#       - "8000:8000"
+  retrieval-system:
+    build:
+      context: ./src/retriever
+      args:
+        APP_PORT: 8000
+    container_name: retrieval-system-backend
+    env_file:
+      - ./src/retriever/.env
+    ports:
+      - "8000:8000"
   
   rerank-system:
     build:
