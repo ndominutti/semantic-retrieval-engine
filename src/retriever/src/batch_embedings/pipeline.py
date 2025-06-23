@@ -1,9 +1,12 @@
+import os
+
+import joblib
+from tqdm import tqdm
+
+from ..utils import load_config, logger
 from .generators.dense_embeder import CohereEmbeder
 from .generators.lexical_embeder import TDIDFLexicalEmbeder
 from .utils import load_data_from_csv
-from ..utils import load_config, logger
-import os
-from tqdm import tqdm
 
 ARTIFACTS_SAVE_PATH = os.getenv("ARTIFACTS_SAVE_PATH", "")
 DATA_PATH = os.getenv("DATA_PATH", "")
@@ -12,7 +15,6 @@ items = load_data_from_csv(DATA_PATH)
 config = load_config()
 cohere_max_batch = config["retrievers"]["dense"]["max_processing_batch"]
 COLUMNS_TO_EMBED = config["retrievers"]["columns_to_embed"]
-import joblib
 
 INTERMEDIATE_SAVE_PATH = "dense_embeddings_partial.joblib"
 
@@ -37,7 +39,6 @@ async def embedd_products() -> None:
     logger.info("Running dense embedding...")
     embedder = CohereEmbeder()
     dense_embeddings = []
-    import time
 
     # need to batch to follow Cohere quotas
     for batch_start in tqdm(range(0, items.shape[0], cohere_max_batch)):

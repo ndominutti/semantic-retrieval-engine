@@ -1,9 +1,10 @@
 from abc import abstractmethod
-import pandas as pd
 from typing import List
-from scipy.sparse._csr import spmatrix
+
 import faiss
 import numpy as np
+import pandas as pd
+from scipy.sparse._csr import spmatrix
 
 
 class BaseLexicalEmbeder:
@@ -21,7 +22,6 @@ class BaseLexicalEmbeder:
 
 
 class BaseDenseEmbeder:
-
     def __init__(self, embedding_dim):
         """Initializes the base embedder with the specified embedding dimension.
 

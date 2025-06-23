@@ -1,5 +1,6 @@
-import faiss
 import os
+
+import faiss
 
 ARTIFACTS_SAVE_PATH = os.getenv("ARTIFACTS_SAVE_PATH")
 

@@ -1,8 +1,9 @@
-import joblib
 import os
-from sklearn.feature_extraction.text import TfidfVectorizer
 from typing import Tuple
+
+import joblib
 from scipy.sparse._csr import csr_matrix
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 ARTIFACTS_SAVE_PATH = os.getenv("ARTIFACTS_SAVE_PATH")
 

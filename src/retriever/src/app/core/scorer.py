@@ -1,7 +1,7 @@
-import yaml
-from utils import load_config
 import logging
-from typing import Union, List, Tuple
+from typing import List, Tuple, Union
+
+from utils import load_config
 
 config = load_config()
 logging.warning(config)

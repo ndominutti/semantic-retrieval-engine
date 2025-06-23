@@ -1,11 +1,13 @@
-import pandas as pd
-from .base_embeder import BaseDenseEmbeder
-from typing import List
-import cohere
-import os
 import asyncio
-from ...utils import load_config, logger
+import os
+from typing import List
+
+import cohere
+import pandas as pd
 from exceptions import MissingColumnsError
+
+from ...utils import load_config, logger
+from .base_embeder import BaseDenseEmbeder
 
 config = load_config()
 cohere_model = config["retrievers"]["dense"]["model"]
@@ -17,7 +19,6 @@ co = cohere.ClientV2(COHERE_API_KEY)
 
 
 class CohereEmbeder(BaseDenseEmbeder):
-
     def __init__(self, embedding_dim=output_dim):
         """Initializes the DenseEmbeder with the specified embedding dimension.
         Args:

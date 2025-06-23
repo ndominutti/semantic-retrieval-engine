@@ -1,13 +1,14 @@
-from ..core.cohere_reranker import CohereReranker
-from utils import load_config, logger
 from typing import List, Tuple
-from ..schemas import RerankDocsResponse
-import pandas as pd
+
+from utils import load_config, logger
+
+from ..core.cohere_reranker import CohereReranker
 from ..fallbacks import (
     async_error_handler_with_fallback,
-    default_fallback_data_ids,
     default_fallback_data_docs,
+    default_fallback_data_ids,
 )
+from ..schemas import RerankDocsResponse
 
 config = load_config()
 columns_to_rerank = config["columns_to_rerank"]

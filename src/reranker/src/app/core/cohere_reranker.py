@@ -1,10 +1,9 @@
-import pandas as pd
-from typing import List, Tuple, Union
-import cohere
-import os
 import asyncio
+import os
+from typing import List
+
+import cohere
 from utils import load_config
-import numpy as np
 
 config = load_config()
 cohere_model = config["model"]

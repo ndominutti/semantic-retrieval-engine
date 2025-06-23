@@ -1,10 +1,12 @@
-from sklearn.feature_extraction.text import TfidfVectorizer
+from typing import List
+
 import joblib
 import pandas as pd
-from scipy.sparse._csr import spmatrix
-from .base_embeder import BaseLexicalEmbeder
-from typing import List
 from exceptions import MissingColumnsError
+from scipy.sparse._csr import spmatrix
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+from .base_embeder import BaseLexicalEmbeder
 
 
 class TDIDFLexicalEmbeder(BaseLexicalEmbeder):

@@ -1,20 +1,21 @@
-from ..core.lexical_retrievers import TFIDFRetriever, BM25Retriever
-from ..core.dense_retriever import DenseRetriever
-from ..core.scorer import score_mixture
-from utils import load_config
-from ..utils import load_tfidf_artifacts, load_bm25_artifacts
-from ..exceptions import WrongRetrievalMethod
-from batch_embedings.utils import load_data_from_csv
 import os
-import pandas as pd
-from typing import Union, List, Tuple
+from typing import List, Tuple, Union
+
 import numpy as np
+import pandas as pd
+from batch_embedings.utils import load_data_from_csv
+from utils import load_config, logger
+
+from ..core.dense_retriever import DenseRetriever
+from ..core.lexical_retrievers import TFIDFRetriever
+from ..core.scorer import score_mixture
+from ..exceptions import WrongRetrievalMethod
 from ..fallbacks import (
     async_error_handler_with_fallback,
     default_fallback_data_docs,
     default_fallback_data_ids,
 )
-from utils import logger
+from ..utils import load_tfidf_artifacts
 
 config = load_config()
 LEXICAL_METHOD = config["retrievers"]["lexical"]["method"]

@@ -1,9 +1,10 @@
-from .base_model import RetrievalBase
-from ..exceptions import WrongRetrievalMethod, WrongSimilarityMethod
-from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
-from sklearn.feature_extraction.text import TfidfVectorizer
 from scipy.sparse._csr import spmatrix
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+from ..exceptions import WrongSimilarityMethod
+from .base_model import RetrievalBase
 
 
 class TFIDFRetriever(RetrievalBase):

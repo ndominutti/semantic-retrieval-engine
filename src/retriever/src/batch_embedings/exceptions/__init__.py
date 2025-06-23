@@ -1,1 +1,3 @@
-from .exceptions import *
+from .exceptions import MissingColumnsError
+
+__all__ = ["MissingColumnsError"]

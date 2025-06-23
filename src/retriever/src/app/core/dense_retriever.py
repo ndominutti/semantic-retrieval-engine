@@ -1,12 +1,13 @@
-import pandas as pd
-from .base_model import RetrievalBase
-from typing import List, Tuple, Union
-import cohere
-import os
 import asyncio
-from utils import load_config
-from ..utils import faiss_connection
+import os
+from typing import List, Tuple, Union
+
+import cohere
 import numpy as np
+from utils import load_config
+
+from ..utils import faiss_connection
+from .base_model import RetrievalBase
 
 config = load_config()
 cohere_model = config["retrievers"]["dense"]["model"]
@@ -19,7 +20,6 @@ co = cohere.ClientV2(COHERE_API_KEY)
 
 
 class DenseRetriever(RetrievalBase):
-
     def __init__(self):
         """Initializes the DenseRetriever with the specified similarity method."""
         self.index = faiss_connection.load_index()
@@ -87,7 +87,7 @@ class DenseRetriever(RetrievalBase):
 
         """
         dense_scores_unsorted = np.zeros(self.index.ntotal, dtype=np.float32)
-        for score, idx in zip(distances[0], idxs[0]):
+        for score, idx in zip(distances[0], idxs[0], strict=False):
             dense_scores_unsorted[idx] = score
         return dense_scores_unsorted.tolist(), [*range(self.index.ntotal)]
 
