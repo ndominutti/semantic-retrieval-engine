@@ -2,10 +2,10 @@ from typing import List
 
 import joblib
 import pandas as pd
-from exceptions import MissingColumnsError
 from scipy.sparse._csr import spmatrix
 from sklearn.feature_extraction.text import TfidfVectorizer
 
+from ..exceptions import EmptyDataFrameError, MissingColumnsError
 from .base_embeder import BaseLexicalEmbeder
 
 
@@ -33,6 +33,8 @@ class TDIDFLexicalEmbeder(BaseLexicalEmbeder):
         Returns:
             spmatrix: Sparse matrix representation of the embedded text data, as produced by the fitted vectorizer.
         """
+        if products_df.empty:
+            raise EmptyDataFrameError("The input DataFrame is empty.")
         missing = [col for col in cols_to_embed if col not in products_df.columns]
         if missing:
             raise MissingColumnsError(f"Missing columns in DataFrame: {missing}")
