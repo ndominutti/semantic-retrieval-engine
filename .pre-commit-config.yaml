@@ -1,12 +1,8 @@
 repos:
-  - repo: local
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.12.0
     hooks:
       - id: ruff
-        name: Run Ruff
-        entry: ruff
-        language: python
-        language_version: python3.10
-        types: [python]
-        args: ["."]
-        additional_dependencies:
-          - ruff==0.12.0
+        types_or: [ python, pyi ]
+      - id: ruff-format
+        types_or: [ python, pyi ]
