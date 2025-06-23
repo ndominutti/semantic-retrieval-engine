@@ -1,3 +1,3 @@
-from .exceptions import MissingColumnsError
+from .exceptions import EmptyDataFrameError, MissingColumnsError
 
-__all__ = ["MissingColumnsError"]
+__all__ = ["MissingColumnsError", "EmptyDataFrameError"]
