@@ -48,3 +48,6 @@ outputs/
 #PoC docs
 WANDS/
 static/
+
+# macOS
+.DS_Store
