@@ -19,6 +19,7 @@ cover/
 # Jupyter Notebook
 .ipynb_checkpoints
 **/*.ipynb
+!assignment.ipynb
 
 # IPython
 profile_default/
@@ -43,11 +44,10 @@ venv.bak/
 **/.env
 
 #Models local saving dir
-outputs/
+**/outputs/*
 
 #PoC docs
 WANDS/
-static/
 
 # macOS
 .DS_Store
