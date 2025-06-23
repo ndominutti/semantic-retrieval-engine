@@ -1,8 +1,8 @@
-import functools
 import asyncio
-from utils import logger
+import functools
 from typing import List, Tuple
-import pandas as pd
+
+from utils import logger
 
 
 def async_error_handler_with_fallback(fallback=None, retries=0, delay=0):

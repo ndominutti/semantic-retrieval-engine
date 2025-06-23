@@ -1,9 +1,12 @@
+import os
+
+import joblib
+from tqdm import tqdm
+
+from ..utils import load_config, logger
 from .generators.dense_embeder import CohereEmbeder
 from .generators.lexical_embeder import TDIDFLexicalEmbeder
 from .utils import load_data_from_csv
-from ..utils import load_config, logger
-import os
-from tqdm import tqdm
 
 ARTIFACTS_SAVE_PATH = os.getenv("ARTIFACTS_SAVE_PATH", "")
 DATA_PATH = os.getenv("DATA_PATH", "")
@@ -12,12 +15,22 @@ items = load_data_from_csv(DATA_PATH)
 config = load_config()
 cohere_max_batch = config["retrievers"]["dense"]["max_processing_batch"]
 COLUMNS_TO_EMBED = config["retrievers"]["columns_to_embed"]
-import joblib
 
 INTERMEDIATE_SAVE_PATH = "dense_embeddings_partial.joblib"
 
 
 async def embedd_products() -> None:
+    """Bulk embed product data using both lexical (TF-IDF) and dense (Cohere) methods,
+    saving intermediate and final artifacts.
+
+    This function performs the following steps:
+    1. Computes and saves lexical embeddings for specified columns using a TF-IDF-based embeder.
+    2. Computes dense embeddings in batches using the Cohere API to respect quota limits, saving intermediate results
+    to disk after each batch.
+    3. Indexes and saves the dense embeddings if all batches complete successfully, and removes the intermediate save
+    file.
+    4. Logs progress and success messages throughout the process.
+    """
     logger.info("Running lexical embedding...")
     lexical_embedder = TDIDFLexicalEmbeder(ARTIFACTS_SAVE_PATH)
     vectors = lexical_embedder.fit_transform(items, COLUMNS_TO_EMBED)
@@ -26,7 +39,6 @@ async def embedd_products() -> None:
     logger.info("Running dense embedding...")
     embedder = CohereEmbeder()
     dense_embeddings = []
-    import time
 
     # need to batch to follow Cohere quotas
     for batch_start in tqdm(range(0, items.shape[0], cohere_max_batch)):

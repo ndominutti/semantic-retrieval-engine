@@ -1,9 +1,10 @@
-from ..services import RetrievalService
-from fastapi import APIRouter
-from .. import schemas
-from utils import logger
 import numpy as np
-from .examples import retrieve_ids_examples, retrieve_docs_examples
+from fastapi import APIRouter
+from utils import logger
+
+from .. import schemas
+from ..services import RetrievalService
+from .examples import retrieve_docs_examples, retrieve_ids_examples
 
 router = APIRouter()
 

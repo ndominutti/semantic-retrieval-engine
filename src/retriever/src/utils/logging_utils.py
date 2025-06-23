@@ -1,6 +1,7 @@
-from loguru import logger
 import os
 import sys
+
+from loguru import logger
 
 ENV = os.getenv("ENV", "")
 LOG_LEVEL = "DEBUG" if ENV == "dev" else "INFO"

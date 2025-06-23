@@ -1,9 +1,12 @@
 from abc import ABC, abstractmethod
+from typing import List, Tuple, Union
+
 import numpy as np
-from typing import Union, Tuple, List
 
 
 class RetrievalBase(ABC):
+    """Base class for retrievers"""
+
     @abstractmethod
     def score(
         self, query, *args, **kwargs

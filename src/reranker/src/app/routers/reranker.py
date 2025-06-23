@@ -1,10 +1,9 @@
-from ..services import RerankService
 from fastapi import APIRouter
-from .. import schemas
 from utils import logger
-import numpy as np
 
-from .examples import rerank_ids_examples, rerank_docs_examples
+from .. import schemas
+from ..services import RerankService
+from .examples import rerank_docs_examples, rerank_ids_examples
 
 router = APIRouter()
 
