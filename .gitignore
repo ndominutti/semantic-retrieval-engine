@@ -44,7 +44,7 @@ venv.bak/
 **/.env
 
 #Models local saving dir
-outputs/*
+**/outputs/*
 
 #PoC docs
 WANDS/
