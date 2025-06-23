@@ -19,6 +19,7 @@ cover/
 # Jupyter Notebook
 .ipynb_checkpoints
 **/*.ipynb
+!assignment.ipynb
 
 # IPython
 profile_default/
@@ -47,7 +48,6 @@ outputs/
 
 #PoC docs
 WANDS/
-static/
 
 # macOS
 .DS_Store
